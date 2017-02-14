@@ -55,6 +55,21 @@ http分支聊得差不多啦，回主线，进入跨域和web前端安全分支�
 答：cors，jsonp等
 接下来聊聊，cors的细节，jsonp的原理。
 ============================================================
+利用在页面中创建<script>节点的方法向不同域提交HTTP请求的方法称为JSONP，这项技术可以解决跨域提交Ajax请求的问题。JSONP的工作原理如下所述：
+
+假设在http://example1.com/index.php这个页面中向http://example2.com/getinfo.php提交GET请求，我们可以将下面的JavaScript代码放在http://example1.com/index.php这个页面中来实现：
+
+1
+var eleScript= document.createElement("script");
+2
+eleScript.type = "text/javascript";
+3
+eleScript.src = "http://example2.com/getinfo.php";
+4
+document.getElementsByTagName("HEAD")[0].appendChild(eleScript);
+当GET请求从http://example2.com/getinfo.php返回时，可以返回一段JavaScript代码，这段代码会自动执行，可以用来负责调用http://example1.com/index.php页面中的一个callback函数。
+
+JSONP的优点是：它不像XMLHttpRequest对象实现的Ajax请求那样受到同源策略的限制；它的兼容性更好，在更加古老的浏览器中都可以运行，不需要XMLHttpRequest或ActiveX的支持；并且在请求完毕后可以通过调用callback的方式回传结果。
 ============================================================
 再接下来聊聊其他跨域的方案，postmessage，document.domain降域
 
